@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import "./App.css";
+import Appname from "./components/Appname";
+import Mainhead from "./components/Mainhead";
+import Itembox from "./components/Itembox";
+import Itemscontainer from "./components/Itemscontainer";
+import { useState } from "react";
 function App() {
+  const [cartitem, setcartitem] = useState("");
+
+  const itemaddfun = (itemname, itemdate) => {
+    setcartitem([...cartitem, { name: itemname, date: itemdate }]);
+  };
+  const itemdeletefun = (itemname) => {
+    const newcartitems = cartitem.filter((item) => item.name !== itemname);
+    setcartitem(newcartitems);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Appname />
+      <Mainhead itemfun={itemaddfun} />
+      <Itemscontainer>
+        <Itembox itemdeletefun={itemdeletefun} cartobject={cartitem}></Itembox>
+      </Itemscontainer>
+    </>
   );
 }
-
 export default App;
