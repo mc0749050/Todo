@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function Mainhead({itemfun}) {
-  const[itemname, setitemname] = useState("");
-  const[itemdate, setitemdate] = useState("");
+  const[itemname, setitemname] = useState(() => localStorage.getItem('itemname') || "");
+  const[itemdate, setitemdate] = useState(() => localStorage.getItem('itemdate') || "");
+
+  useEffect(() => {
+    localStorage.setItem('itemname', itemname);
+  }, [itemname]);
+
+  // Update local storage whenever itemdate changes
+  useEffect(() => {
+    localStorage.setItem('itemdate', itemdate);
+  }, [itemdate]);
+
+  
 
   const itemnamechange = (event) => {
     setitemname(event.target.value);
